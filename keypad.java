@@ -2,7 +2,8 @@ import java.util.Scanner;
 
 public class keypad {
     public int digit_count = 15;
-    public int code_one,code_two,code_three,key;
+    public int code_one,code_two,code_three;
+    public long key;
     public boolean power = true; //  CMOS battery is on
 
     public static void main(String[] args) {
@@ -39,14 +40,16 @@ public class keypad {
                 if ( String.valueOf(code_three).length() != 5 )  System.out.println("Error code must be 5 digits"); 
             }
             
-            if ( key == key && key == generateKey( code_one, code_two, code_three ) ){
-                System.out.println( "Stored key: " + key + "\n Generated Key: " + generateKey( code_one, code_two, code_three ) );
+            if ( key == key && key == generateKey( code_one, code_two, code_three, false ) ){
+                System.out.println( "Vault has been unlocked. \n Saved Key: " + key + "\n Generated Key: " + generateKey( code_one, code_two, code_three, true ) + "\n" );
             } 
-
-            if ( key == 0 ){
-                key=generateKey( code_one, code_two, code_three );
-                System.out.println( "Saved " + key + " to memory as the Key");
+            else if ( key == 0 ){
+                key=generateKey( code_one, code_two, code_three, true );
+                System.out.println( "Saved " + key + " to memory as the Key\n");
             } 
+            else {
+                System.out.println( "\n INVALID !!!! \n" );
+            }
 
             code_one = 0; 
             code_two = 0;
@@ -54,8 +57,14 @@ public class keypad {
         }
     }
 
-    public int generateKey(int one, int two, int three){
-        
-        return one + two + three;
+    public long generateKey(int one, int two, int three, boolean verbose){
+        if(verbose){
+            System.out.println("Person 1: " + Integer.toBinaryString(one));
+            System.out.println("Person 2: " + Integer.toBinaryString(two));
+            System.out.println("Person 3: " + Integer.toBinaryString(three));
+            System.out.println("Key Generated: " +  Integer.toBinaryString(( ( one ^ two ) ^ three)) );
+        }
+
+        return Long.valueOf(Integer.toBinaryString(( ( one ^ two ) ^ three)));
     }
 }
