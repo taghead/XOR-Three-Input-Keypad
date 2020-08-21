@@ -5,3 +5,5 @@ A simple XOR keypad programmed to set a master key on first input and unlock on 
 
 `javac keypad.java`
 `java keypad`
+
+![/assets/img/0NOxSDVwtv.gif](/assets/img/0NOxSDVwtv.gif)
